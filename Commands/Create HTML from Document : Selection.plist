@@ -21,6 +21,15 @@ end
 	<string>Create HTML From Document / Selection</string>
 	<key>output</key>
 	<string>openAsNewDocument</string>
+	<key>require</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Themes</string>
+			<key>uuid</key>
+			<string>A4380B27-F366-4C70-A542-B00D26ED997E</string>
+		</dict>
+	</array>
 	<key>uuid</key>
 	<string>950B3108-E2E3-414E-9C4C-EE068F59A895</string>
 </dict>

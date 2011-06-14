@@ -16,6 +16,7 @@ FONT_MAP = {
 # "Create for Current Language" command
 def find_theme(uuid)
 	theme_dirs = [
+		"#{ENV['TM_THEMES_BUNDLE_SUPPORT']}/../Themes",
 		File.expand_path('~/Library/Application Support/TextMate/Themes'),
 		'/Library/Application Support/TextMate/Themes',
 		TextMate.app_path + '/Contents/SharedSupport/Themes'

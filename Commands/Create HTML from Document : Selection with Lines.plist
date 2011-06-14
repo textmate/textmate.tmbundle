@@ -20,6 +20,15 @@ end</string>
 	<string>Create HTML From Document / Selection With Line Numbers</string>
 	<key>output</key>
 	<string>openAsNewDocument</string>
+	<key>require</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Themes</string>
+			<key>uuid</key>
+			<string>A4380B27-F366-4C70-A542-B00D26ED997E</string>
+		</dict>
+	</array>
 	<key>uuid</key>
 	<string>7AE6F783-F162-4063-850D-1441441849D8</string>
 </dict>
