@@ -22,6 +22,7 @@ def find_theme(uuid)
 		TextMate.app_path + '/Contents/SharedSupport/Themes'
 	]
 
+	uuid = "71D40D9D-AE48-11D9-920A-000D93589AF6" if uuid.nil?
 	theme_dirs.each do |theme_dir|
 		if File.exists? theme_dir
 			themes = Dir.entries(theme_dir).find_all { |theme| theme =~ /.+\.(tmTheme|plist)$/ }
