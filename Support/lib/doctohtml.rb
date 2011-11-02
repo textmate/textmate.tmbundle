@@ -49,9 +49,9 @@ def generate_stylesheet_from_theme(theme_class = nil)
 	require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
 
 	# Load TM preferences to discover the current theme and font settings
-	textmate_pref_file = '~/Library/Preferences/com.macromates.textmate.plist'
+	textmate_pref_file = "~/Library/Preferences/#{`defaults read "$TM_APP_PATH/Contents/Info" CFBundleIdentifier`.chomp}.plist"
 	prefs = OSX::PropertyList.load(File.open(File.expand_path(textmate_pref_file)))
-	theme_uuid = prefs['OakThemeManagerSelectedTheme']
+	theme_uuid = prefs['themeUUID']
 	# Load the active theme. Unfortunately, this requires us to scan through
 	# all discoverable theme files...
 	unless theme_plist = find_theme(theme_uuid)
