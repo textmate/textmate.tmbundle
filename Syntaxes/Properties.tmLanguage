@@ -40,8 +40,24 @@
 		<dict>
 			<key>begin</key>
 			<string>^\[</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.section.begin.tm-properties</string>
+				</dict>
+			</dict>
 			<key>end</key>
 			<string>\]</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.section.end.tm-properties</string>
+				</dict>
+			</dict>
 			<key>name</key>
 			<string>meta.section.tm-properties</string>
 			<key>patterns</key>
@@ -61,8 +77,16 @@
 	<dict>
 		<key>comment</key>
 		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.tm-properties</string>
+				</dict>
+			</dict>
 			<key>match</key>
-			<string>#.*\n?</string>
+			<string>(#).*\n?</string>
 			<key>name</key>
 			<string>comment.line.number-sign.tm-properties</string>
 		</dict>
@@ -79,8 +103,24 @@
 				<dict>
 					<key>begin</key>
 					<string>"</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.string.begin.tm-properties</string>
+						</dict>
+					</dict>
 					<key>end</key>
 					<string>"</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.string.end.tm-properties</string>
+						</dict>
+					</dict>
 					<key>name</key>
 					<string>string.quoted.double.tm-properties</string>
 					<key>patterns</key>
@@ -96,8 +136,24 @@
 				<dict>
 					<key>begin</key>
 					<string>'</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.string.begin.tm-properties</string>
+						</dict>
+					</dict>
 					<key>end</key>
 					<string>'</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.string.end.tm-properties</string>
+						</dict>
+					</dict>
 					<key>name</key>
 					<string>string.quoted.single.tm-properties</string>
 				</dict>
