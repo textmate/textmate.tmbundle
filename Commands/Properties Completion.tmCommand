@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require ENV['TM_SUPPORT_PATH'] + '/lib/ui.rb'
+
+choices = [{ "display" =&gt; 'exclude' },
+{ "display" =&gt; 'excludeFiles' },
+{ "display" =&gt; 'excludeDirectories' },
+{ "display" =&gt; 'excludeInBrowser' },
+{ "display" =&gt; 'excludeInFolderSearch' },
+{ "display" =&gt; 'excludeInFileChooser' },
+{ "display" =&gt; 'excludeFilesInBrowser' },
+{ "display" =&gt; 'excludeDirectoriesInBrowser' },
+{ "display" =&gt; 'include' },
+{ "display" =&gt; 'includeFiles' },
+{ "display" =&gt; 'includeDirectories' },
+{ "display" =&gt; 'includeInBrowser' },
+{ "display" =&gt; 'includeInFileChooser' },
+{ "display" =&gt; 'includeFilesInBrowser' },
+{ "display" =&gt; 'includeDirectoriesInBrowser' },
+{ "display" =&gt; 'includeFilesInFileChooser' },
+{ "display" =&gt; 'projectDirectory' },
+{ "display" =&gt; 'windowTitle' },
+{ "display" =&gt; 'scopeAttributes' },
+{ "display" =&gt; 'theme' },
+{ "display" =&gt; 'fontName' },
+{ "display" =&gt; 'fontSize' },
+{ "display" =&gt; 'showInvisibles' },
+{ "display" =&gt; 'tabSize' },
+{ "display" =&gt; 'softTabs' },
+{ "display" =&gt; 'spellChecking' },
+{ "display" =&gt; 'spellingLanguage' }]
+
+TextMate::UI.complete(choices)
+</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>~</string>
+	<key>name</key>
+	<string>Properties Completion</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>completionList</string>
+	<key>outputLocation</key>
+	<string>replaceInput</string>
+	<key>scope</key>
+	<string>source.tm-properties</string>
+	<key>uuid</key>
+	<string>F69972FE-61A6-47A6-BAD3-E7CE83246E49</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
