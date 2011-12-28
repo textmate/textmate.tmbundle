@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Properties: Completions</string>
+	<key>scope</key>
+	<string>source.tm-properties</string>
+	<key>settings</key>
+	<dict>
+		<key>completions</key>
+		<array>
+			<string>exclude</string>
+			<string>excludeFiles</string>
+			<string>excludeDirectories</string>
+			<string>excludeInBrowser</string>
+			<string>excludeInFolderSearch</string>
+			<string>excludeInFileChooser</string>
+			<string>excludeFilesInBrowser</string>
+			<string>excludeDirectoriesInBrowser</string>
+			<string>include</string>
+			<string>includeFiles</string>
+			<string>includeDirectories</string>
+			<string>includeInBrowser</string>
+			<string>includeInFileChooser</string>
+			<string>includeFilesInBrowser</string>
+			<string>includeDirectoriesInBrowser</string>
+			<string>includeFilesInFileChooser</string>
+			<string>projectDirectory</string>
+			<string>windowTitle</string>
+			<string>scopeAttributes</string>
+			<string>theme</string>
+			<string>fontName</string>
+			<string>fontSize</string>
+			<string>fileType</string>
+			<string>binary</string>
+			<string>showInvisibles</string>
+			<string>tabSize</string>
+			<string>softTabs</string>
+			<string>spellChecking</string>
+			<string>spellingLanguage</string>
+		</array>
+	</dict>
+	<key>uuid</key>
+	<string>CE48C640-F525-4FFC-AADE-5EBB676D0705</string>
+</dict>
+</plist>
