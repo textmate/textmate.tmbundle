@@ -38,8 +38,10 @@ choices = [{ "display" =&gt; 'exclude' },
 
 TextMate::UI.complete(choices)
 </string>
+	<key>hideFromUser</key>
+	<true/>
 	<key>input</key>
-	<string>selection</string>
+	<string>word</string>
 	<key>inputFormat</key>
 	<string>text</string>
 	<key>keyEquivalent</key>
@@ -49,9 +51,9 @@ TextMate::UI.complete(choices)
 	<key>outputCaret</key>
 	<string>afterOutput</string>
 	<key>outputFormat</key>
-	<string>completionList</string>
+	<string>text</string>
 	<key>outputLocation</key>
-	<string>replaceInput</string>
+	<string>discard</string>
 	<key>scope</key>
 	<string>source.tm-properties</string>
 	<key>uuid</key>
