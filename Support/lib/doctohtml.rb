@@ -49,7 +49,7 @@ def generate_stylesheet_from_theme(theme_class = nil)
 	require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
 
 	# Load TM preferences to discover the current theme and font settings
-	textmate_pref_file = "~/Library/Preferences/#{`defaults read "$TM_APP_PATH/Contents/Info" CFBundleIdentifier`.chomp}.plist"
+	textmate_pref_file = "~/Library/Preferences/#{ENV['TM_APP_IDENTIFIER'] || 'com.macromates.textmate'}.plist"
 	prefs = OSX::PropertyList.load(File.open(File.expand_path(textmate_pref_file)))
 	theme_uuid = prefs['themeUUID']
 	# Load the active theme. Unfortunately, this requires us to scan through
