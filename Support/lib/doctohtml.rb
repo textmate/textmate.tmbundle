@@ -12,27 +12,8 @@ FONT_MAP = {
 	/\bDejaVuSansMono\b/i => '"DejaVu Sans Mono"'
 }
 
-# Search heuristic is based on the Theme Builder bundle's
-# "Create for Current Language" command
-def find_theme(uuid)
-	theme_dirs = [
-		"#{ENV['TM_THEMES_BUNDLE_SUPPORT']}/../Themes",
-		File.expand_path('~/Library/Application Support/TextMate/Themes'),
-		'/Library/Application Support/TextMate/Themes',
-		TextMate.app_path + '/Contents/SharedSupport/Themes'
-	]
-
-	uuid = "71D40D9D-AE48-11D9-920A-000D93589AF6" if uuid.nil?
-	theme_dirs.each do |theme_dir|
-		if File.exists? theme_dir
-			themes = Dir.entries(theme_dir).find_all { |theme| theme =~ /.+\.(tmTheme|plist)$/ }
-			themes.each do |theme|
-				plist = OSX::PropertyList.load(File.open("#{theme_dir}/#{theme}"))
-				return plist if plist["uuid"] == uuid
-			end
-		end
-	end
-	return nil
+def load_theme
+  return OSX::PropertyList.load(File.open(ENV['TM_CURRENT_THEME_PATH']))
 end
 
 def to_rgba(color)
@@ -48,13 +29,7 @@ def generate_stylesheet_from_theme(theme_class = nil)
 	theme_class = '' if theme_class == nil
 	require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
 
-	# Load TM preferences to discover the current theme and font settings
-	textmate_pref_file = "~/Library/Preferences/#{ENV['TM_APP_IDENTIFIER'] || 'com.macromates.textmate'}.plist"
-	prefs = OSX::PropertyList.load(File.open(File.expand_path(textmate_pref_file)))
-	theme_uuid = prefs['themeUUID']
-	# Load the active theme. Unfortunately, this requires us to scan through
-	# all discoverable theme files...
-	unless theme_plist = find_theme(theme_uuid)
+	unless theme_plist = load_theme
 		print "Could not locate your theme file!"
 		abort
 	end
@@ -66,8 +41,8 @@ def generate_stylesheet_from_theme(theme_class = nil)
 	theme_class.gsub!(/[^a-z0-9_-]/, '_')
 	theme_class.gsub!(/_+/, '_')
 
-	font_name = prefs['OakTextViewNormalFontName'] || 'Monaco'
-	font_size = (prefs['OakTextViewNormalFontSize'] || 11).to_s
+	font_name = `"$TM_QUERY" --setting fontName`.chomp || 'Menlo-Regular'
+	font_size = (`"$TM_QUERY" --setting fontSize`.chomp || 12).to_s
 	font_size.sub! /\.\d+$/, ''
 
 	FONT_MAP.each do | font_re, font_alt |
