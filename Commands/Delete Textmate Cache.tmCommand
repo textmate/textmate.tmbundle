@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>#!/bin/sh
+rm "~/Library/Application\ Support/TextMate/Cache"
+
+{ osascript -e "tell app \"$(basename "$TM_APP_PATH")\" to quit"
+
+  while ps &gt;/dev/null -xp "$PPID"; do
+    if (( ++n == 10 )); then
+      "$DIALOG" &lt;/dev/null alert --title "Relaunch Timed Out" --body "Unable to exit TextMate." --button1 OK
+      exit
+    fi
+    sleep .2;
+  done
+
+  open "$TM_APP_PATH"
+
+} &amp;&gt;/dev/null &amp;
+</string>
+	<key>name</key>
+	<string>Delete Textmate Cache</string>
+	<key>uuid</key>
+	<string>F4A66196-6179-4546-AEB2-B32502A7FFEC</string>
+</dict>
+</plist>
