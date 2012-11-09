@@ -8,6 +8,12 @@ You can install this bundle in TextMate by opening the preferences and going to 
 * [Commit Styleguide](http://kb.textmate.org/commit_styleguide) — _before you send a pull request_
 * [Writing Bug Reports](http://kb.textmate.org/writing_bug_reports) — _before you report an issue_
 
+
+
+# Credit
+
+Copy as rtf created by [Max Muermann](http://www.workingwithrails.com/person/8530-max-muermann) (hosted on gitghhub by [Dr Nic Williams](http://drnicwilliams.com)).
+
 # License
 
 If not otherwise specified (see below), files in this repository fall under the following license:
