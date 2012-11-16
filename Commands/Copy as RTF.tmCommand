@@ -20,7 +20,7 @@ print doc
 	<key>inputFormat</key>
 	<string>xml</string>
 	<key>keyEquivalent</key>
-	<string>~@c</string>
+	<string>^~@c</string>
 	<key>name</key>
 	<string>Copy as RTF</string>
 	<key>outputCaret</key>
