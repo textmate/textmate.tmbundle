@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>commands</key>
+	<array>
+		<dict>
+			<key>command</key>
+			<string>findNextAndModifySelection:</string>
+		</dict>
+	</array>
+	<key>isDisabled</key>
+	<false/>
+	<key>keyEquivalent</key>
+	<string>^w</string>
+	<key>name</key>
+	<string>Extend selection to include next</string>
+	<key>scope</key>
+	<string>dyn.selection</string>
+	<key>uuid</key>
+	<string>B11362D8-C4E9-401E-8A0E-C636012B1242</string>
+</dict>
+</plist>
