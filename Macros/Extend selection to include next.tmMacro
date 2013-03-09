@@ -6,6 +6,10 @@
 	<array>
 		<dict>
 			<key>command</key>
+			<string>copySelectionToFindPboard:</string>
+		</dict>
+		<dict>
+			<key>command</key>
 			<string>findNextAndModifySelection:</string>
 		</dict>
 	</array>
