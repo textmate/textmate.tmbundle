@@ -6,18 +6,22 @@
 	<array>
 		<dict>
 			<key>command</key>
-			<string>findNextAndModifySelection:</string>
+			<string>copySelectionToFindPboard:</string>
+		</dict>
+		<dict>
+			<key>command</key>
+			<string>findPreviousAndModifySelection:</string>
 		</dict>
 	</array>
 	<key>isDisabled</key>
 	<false/>
 	<key>keyEquivalent</key>
-	<string>^w</string>
+	<string>^W</string>
 	<key>name</key>
-	<string>Extend selection to include next</string>
+	<string>Extend selection to include previous</string>
 	<key>scope</key>
 	<string>dyn.selection</string>
 	<key>uuid</key>
-	<string>5E90CE19-DDF3-4FA1-B29B-DF40DF616F6A</string>
+	<string>E5EE033C-4A05-431C-AAED-EA198FE40F77</string>
 </dict>
 </plist>
