@@ -8,6 +8,8 @@
 	<array>
 		<string>re</string>
 	</array>
+	<key>keyEquivalent</key>
+	<string>^~R</string>
 	<key>name</key>
 	<string>Regular Expressions (Oniguruma)</string>
 	<key>patterns</key>
