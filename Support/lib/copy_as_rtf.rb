@@ -66,19 +66,17 @@ class RtfExporter
     @font_name = `"$TM_QUERY" --setting fontName`.chomp || 'Menlo-Regular'
     @font_size = (`"$TM_QUERY" --setting fontSize`.chomp || 12).to_s
     @font_size.sub! /\.\d+$/, ''
-    @font_size = @font_size.to_i * 3
+    @font_size = @font_size.to_i * 2
     
     @font_name = '"' + @font_name + '"' if @font_name.include?(' ') &&
       !@font_name.include?('"')
     
     theme_plist['settings'].each do | setting |
       if (!setting['name'] and setting['settings'])
-        body_bg = setting['settings']['background'] || '#ffffff'
-        @body_bg ||= body_bg
         body_fg = setting['settings']['foreground'] || '#000000'
-        body_bg = hex_color_to_rtf(body_bg)
         body_fg = hex_color_to_rtf(body_fg)
         @colors << body_fg
+        @colors = body_fg + @colors
         next
       end
       if setting['name'] && setting['scope']
@@ -89,7 +87,7 @@ class RtfExporter
   end
 
   def color_table
-    "{\\colortbl;#{@colors}}"
+    "{\\colortbl#{@colors}}"
   end
   
   def font_table
@@ -221,8 +219,7 @@ RTF_DOC
     new_style = cur.merge new_style if new_style
     new_style ||= cur || {}
     unless new_style[:color_index]
-      #45 works for Sunburst theme; 0 for Eiffle or IDLE theme
-      new_style[:color_index] = (@body_bg == '#000000') ? 45 : 0
+      new_style[:color_index] = 0
     end
     @style_stack.unshift new_style
     new_style
