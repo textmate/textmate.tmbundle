@@ -55,30 +55,22 @@ class RtfExporter
     return "\\red#{r}\\green#{g}\\blue#{b};"
   end
   
-  def generate_stylesheet_from_theme(theme_class = nil)
-    theme_class = '' if theme_class == nil
+  def generate_stylesheet_from_theme
     require "#{ENV['TM_SUPPORT_PATH']}/lib/osx/plist"
 
-    # Load TM preferences to discover the current theme and font settings
-    textmate_pref_file = '~/Library/Preferences/com.macromates.textmate.plist'
-    prefs = OSX::PropertyList.load(File.open(File.expand_path(textmate_pref_file)))
-    theme_uuid = prefs['OakThemeManagerSelectedTheme']
-    # Load the active theme. Unfortunately, this requires us to scan through
-    # all discoverable theme files...
-    unless theme_plist = find_theme(theme_uuid)
+    unless theme_plist = load_theme
       print "Could not locate your theme file or it may be corrupt or unparsable!"
       abort
     end
 
-    @font_name = prefs['OakTextViewNormalFontName'] || 'Monaco'
-    @font_size = (prefs['OakTextViewNormalFontSize'] || 11).to_s
+    @font_name = `"$TM_QUERY" --setting fontName`.chomp || 'Menlo-Regular'
+    @font_size = (`"$TM_QUERY" --setting fontSize`.chomp || 12).to_s
     @font_size.sub! /\.\d+$/, ''
     @font_size = @font_size.to_i * 3
     
     @font_name = '"' + @font_name + '"' if @font_name.include?(' ') &&
       !@font_name.include?('"')
-      
-
+    
     theme_plist['settings'].each do | setting |
       if (!setting['name'] and setting['settings'])
         body_bg = setting['settings']['background'] || '#ffffff'
@@ -124,29 +116,8 @@ RTF_DOC
   # \\tab\\tab\\i \\cf3 Another line
   # }}
   
-  # Search heuristic is based on the Theme Builder bundle's
-  # "Create for Current Language" command
-  def find_theme(uuid)
-    theme_dirs = [
-      File.expand_path('~/Library/Application Support/TextMate/Themes'),
-      '/Library/Application Support/TextMate/Themes',
-      TextMate.app_path + '/Contents/SharedSupport/Themes'
-    ]
-
-    theme_dirs.each do |theme_dir|
-      if File.exists? theme_dir
-        themes = Dir.entries(theme_dir).find_all { |theme| theme =~ /.+\.(tmTheme|plist)$/ }
-        themes.each do |theme|
-          begin
-            plist = OSX::PropertyList.load(File.open("#{theme_dir}/#{theme}"))
-            return plist if plist["uuid"] == uuid
-          rescue OSX::PropertyListError => e
-            # puts "Error parsing theme #{theme_dir}/#{theme}" - e.g. GitHub.tmTheme has issues
-          end
-        end
-      end
-    end
-    return nil
+  def load_theme
+    return OSX::PropertyList.load(File.open(ENV['TM_CURRENT_THEME_PATH']))
   end
   
   def detab(str, width)
