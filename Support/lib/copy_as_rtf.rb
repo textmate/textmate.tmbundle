@@ -134,10 +134,17 @@ RTF_DOC
     return lines.join("\n")
   end
   
+  def strip_leading(text, ch = ' ')
+    count = text.gsub(/<[^>]+>/, '').split("\n").map { |e| e =~ /^#{ch}*(?!#{ch}|$)/ ? $&.length : nil }.reject { |e| e.nil? }.min
+    text.send(text.respond_to?(:lines) ? :lines : :to_s).map { |line| count.times { line.sub!(/^((<[^>]+>)*)#{ch}/, '\1') }; line }.join
+  end
+
   def document_to_rtf(input, opt = {})
     # Read the source document / selection
     # Convert tabs to spaces using configured tab width
     input = detab(input, (ENV['TM_TAB_SIZE'] || '2').to_i)
+
+    input = strip_leading(input, " ")
 
     input.gsub! /\\/, "__backslash__"
     input.gsub! /\\n/, "__newline__"
