@@ -10,6 +10,10 @@
 	<string>This bundle has functionality which add to the application but is not related to a specific task (bundle).</string>
 	<key>mainMenu</key>
 	<dict>
+		<key>excludedItems</key>
+		<array>
+			<string>615998FE-A13B-4199-A670-E5A892A1C43A</string>
+		</array>
 		<key>items</key>
 		<array>
 			<string>6E779E48-F146-49BF-B60C-EFDFD1380772</string>

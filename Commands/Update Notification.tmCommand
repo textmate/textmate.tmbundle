@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/bin/bash
+: "${TM_APP_PATH:=/Applications/TextMate.app}"
+
+{ if [[ -d "$TM_APP_PATH" &amp;&amp; $(defaults read "$TM_APP_PATH/Contents/Info" CFBundleVersion) -lt 9409 ]]; then
+    exec "$DIALOG" alert --title "Update Available" --body "You should go to Preferences → Software Update and Check Now" --button1 OK
+  fi
+
+  osascript -e "tell app \"$(basename "$TM_APP_PATH")\" to quit"
+
+} &amp;&gt;/dev/null &amp;</string>
+	<key>input</key>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>@q</string>
+	<key>name</key>
+	<string>Update Notification</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>-attr.os-version.10.6</string>
+	<key>uuid</key>
+	<string>615998FE-A13B-4199-A670-E5A892A1C43A</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
