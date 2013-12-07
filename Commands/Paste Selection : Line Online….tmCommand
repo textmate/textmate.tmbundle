@@ -239,21 +239,10 @@ def paste_stdin(priv, wrap)
       end
   end
 
-  paste_via_rafb = 
   case $status
-    when :timeout then TextMate::UI.alert(:warning, "Timeout Pasting", "There was a problem pasting your text (timeout).\nWould you like to use RAFB.net instead?", "Paste via RAFB", "Cancel") != "Cancel"
-    when :error   then TextMate::UI.alert(:warning, "Error Pasting", "There was a problem pasting your text, pastie.org responded with #{response}\nWould you like to use RAFB.net instead?", "Paste via RAFB", "Cancel") != "Cancel"
+    when :timeout then TextMate::UI.alert(:warning, "Timeout Pasting", "There was a problem pasting your text (timeout).", "OK")
+    when :error   then TextMate::UI.alert(:warning, "Error Pasting", "There was a problem pasting your text, pastie.org responded with #{response}", "OK")
     else false
-  end
-
-  if paste_via_rafb
-    mode = $&amp; if ENV['TM_MODE'] =~ /^(C89|C|C\+\+|C#|Java|Pascal|Perl|PHP|PL\/I|Python|Ruby|SQL|VB)$/
-    $status, res, response = connect_to_server("RAFB.net", "http://rafb.net/paste/paste.php",
-      "-Fnick=#{ENV['USER']}",
-      "-Fcvt_tabs=#{ENV['TM_TAB_SIZE']}",
-      "-Ftext=&lt;#{text_file.path}",
-      "-Flang=#{mode || "Plain Text"}"
-    )
   end
 
   return $status == :success ? res : nil
@@ -279,9 +268,15 @@ TextMate.detach {
 	<string>^~V</string>
 	<key>name</key>
 	<string>Paste Document / Selection Online…</string>
-	<key>output</key>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
 	<string>discard</string>
 	<key>uuid</key>
 	<string>6E779E48-F146-49BF-B60C-EFDFD1380772</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>
