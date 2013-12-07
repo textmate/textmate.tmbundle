@@ -252,7 +252,6 @@ TextMate.detach {
   dests, priv, wrap = get_destinations
   unless dests.empty?
     if url = paste_stdin(priv, wrap)
-      dests = Iconv.iconv('mac', 'utf-8', dests) if %x{ defaults read /System/Library/CoreServices/SystemVersion ProductVersion } =~ /\A10\.4/
       %x{ osascript #{e_sh temp_script(BUNDLE_SUPPORT + "/paste_to_destinations.scpt")} #{e_sh url} #{e_sh dests} }
     end
   end
