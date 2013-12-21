@@ -18,68 +18,36 @@ require "#{SUPPORT_PATH}/lib/tm/detach"
 require "#{SUPPORT_PATH}/lib/progress"
 require "#{SUPPORT_PATH}/lib/escape"
 require 'cgi'
-require 'fileutils'
 require 'zlib'
 require "yaml"
 require "iconv"
 require "tempfile"
-
-def temp_script(script)
-  dest = %x{ /usr/bin/mktemp -t tm_paste }.chomp
-  at_exit { File.delete dest }
-  FileUtils.cp(script, dest)
-  dest
-end
-
-# example: ["Colloquy", "#textmate"] -&gt; [ 2, 1 ]
-def indices_for_names(names, tree)
-  name = names.shift
-  node = tree.find { |n| n["name"] == name }
-  return [ 0 ] if node.nil?
-  res  = [ tree.index(node) ]
-  res += indices_for_names(names, node["children"]) unless names.empty? || node["children"].nil?
-  return res
-end
-
-# example: [ 2, 1 ] -&gt; ["Colloquy", "#textmate"]
-def names_for_indices(indices, tree)
-  node = tree[indices.shift.to_i]
-  res  = [ node["name"] ]
-  res += names_for_indices(indices, node["children"]) unless indices.empty?
-  return res
-end
 
 PREFS_FILE = "#{ENV['HOME']}/Library/Preferences/com.macromates.textmate.paste_online.yaml"
 
 def load_prefs(destinations)
   prefs = File.open(PREFS_FILE) { |file| YAML.load(file) } rescue { }
   selected = prefs['selectedDestinations'] || [ [ "Paste to Colloquy:", "#textmate" ] ]
-  selected.collect! { |names| indices_for_names(names, destinations) }
   return { 'selectedDestinations' =&gt; selected }
 end
 
 def save_prefs(params)
   selected = params['selectedDestinations'].dup
-  selected.collect! { |indices| names_for_indices(indices.dup, params['destinations']) }
   File.open(PREFS_FILE, "w") { |file| YAML.dump({ 'selectedDestinations' =&gt; selected }, file) }
 end
 
 def get_destinations
-  destinations = []
+  proclist = `ps -x -o command`
+  active = []
+
+  destinations = [{ 'name' =&gt; 'Open in Browser' }, { 'name' =&gt; 'Send to Clipboard' }]
   node = nil
-
-  actions = %x{ osascript #{e_sh temp_script(BUNDLE_SUPPORT + "/get_destinations.scpt")} }
-  actions.split("\n").each do |action|
-    if action =~ /^\t(.+)/ then
-      (node['children'] ||= [ ]) &lt;&lt; { 'name' =&gt; $1 }
-    else
-      node = { 'name' =&gt; action }
-      destinations &lt;&lt; node
-    end
+  
+  active = proclist.scan(%r{^(?:/.*\.app/Contents/MacOS/(Quicksilver)\b)}).flatten
+  
+  if active.include?('Quicksilver')
+    destinations &lt;&lt; { 'name' =&gt; 'Send to Quicksilver' }
   end
-
-  destinations.sort! { |a, b| a['name'] &lt;=&gt; b['name'] }
-  destinations.each { |e| e['children'].sort! { |a, b| a['name'] &lt;=&gt; b['name'] } if e.has_key? 'children' }
 
   prefs = load_prefs(destinations)
 
@@ -252,7 +220,20 @@ TextMate.detach {
   dests, priv, wrap = get_destinations
   unless dests.empty?
     if url = paste_stdin(priv, wrap)
-      %x{ osascript #{e_sh temp_script(BUNDLE_SUPPORT + "/paste_to_destinations.scpt")} #{e_sh url} #{e_sh dests} }
+      if dests.include?('Send to Clipboard')
+        IO.popen('pbcopy', 'w') { |io| io &lt;&lt; url }
+      end
+      if dests.include?('Open in Browser')
+        %x{ open #{e_sh url} }
+      end      
+      if dests.include?('Send to Quicksilver')
+        %x{osascript &lt;&lt;'APPLESCRIPT'
+    			tell application "Quicksilver"
+    				activate
+    				set selection to "#{url}"
+    			end tell
+        APPLESCRIPT}
+      end
     end
   end
 }
