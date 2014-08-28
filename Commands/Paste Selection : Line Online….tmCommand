@@ -25,9 +25,9 @@ require "tempfile"
 
 PREFS_FILE = "#{ENV['HOME']}/Library/Preferences/com.macromates.textmate.paste_online.yaml"
 
-def load_prefs(destinations)
+def load_prefs
   prefs = File.open(PREFS_FILE) { |file| YAML.load(file) } rescue { }
-  selected = prefs['selectedDestinations'] || [ [ "Paste to Colloquy:", "#textmate" ] ]
+  selected = prefs['selectedDestinations'] || [[0]]
   return { 'selectedDestinations' =&gt; selected }
 end
 
@@ -49,7 +49,7 @@ def get_destinations
     destinations &lt;&lt; { 'name' =&gt; 'Send to Quicksilver' }
   end
 
-  prefs = load_prefs(destinations)
+  prefs = load_prefs
 
   window_title = if ENV.has_key? 'TM_SELECTED_TEXT'; 'Paste Selection Online'; else 'Paste Document Online'; end
   default_wrap = (ENV['TM_SCOPE'] =~ /^text\./) ? 1 : 0
