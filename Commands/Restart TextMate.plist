@@ -17,7 +17,7 @@
     sleep .2;
   done
 
-  open "$TM_APP_PATH"
+  open "$TM_APP_PATH" --args -disableSessionRestore NO
 
 } &amp;&gt;/dev/null &amp;</string>
 	<key>input</key>
