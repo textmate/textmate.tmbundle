@@ -23,7 +23,7 @@
 	<key>input</key>
 	<string>none</string>
 	<key>keyEquivalent</key>
-	<string>^@q</string>
+	<string>^~@q</string>
 	<key>name</key>
 	<string>Relaunch TextMate</string>
 	<key>output</key>
