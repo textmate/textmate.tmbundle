@@ -48,10 +48,15 @@ class RtfExporter
   end
   
   def hex_color_to_rtf hex
-    hex =~ /#(..)(..)(..)/
-    r = $1.hex
-    g = $2.hex
-    b = $3.hex
+    if hex =~ /#(.{1,2})(.{1,2})(.{1,2})/
+      r = $1.hex
+      g = $2.hex
+      b = $3.hex
+    else
+      r = 0
+      g = 0
+      b = 0
+    end
     return "\\red#{r}\\green#{g}\\blue#{b};"
   end
   
